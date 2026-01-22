@@ -1,16 +1,10 @@
-<!-- Chosen Palette: Warm Paper & Ink (Stone, Amber, Slate, Teal) - Extended for Personal Site -->
-<!-- Application Structure Plan:
-    1. Global Navigation: Integrated custom navbar.
-    2. Home View: Personal Hero section (Default Visible).
-    3. Reading Report View: Dark styled header + Content (Default Hidden).
--->
-
+<!-- Chosen Palette: Warm Paper & Ink (Stone, Amber, Slate, Teal) - Separate Page Version -->
 <!DOCTYPE html>
 <html lang="zh-TW" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iffy's Life | 2025 年度閱讀足跡</title>
+    <title>2025 年度閱讀足跡 | Iffy's Life</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Fonts: Zen Maru Gothic for Headers, Noto Sans TC for Body text -->
@@ -82,15 +76,6 @@
             from { opacity: 0; transform: translateY(-5px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Simple Fade In for View Switching */
-        .fade-in-section {
-            animation: fadeInSection 0.5s ease-out;
-        }
-        @keyframes fadeInSection {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
@@ -101,7 +86,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo / Brand -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="#" onclick="navigateTo('home'); return false;" class="brand-font text-2xl text-stone-800 hover:text-amber-600 transition-colors">
+                    <a href="index.html" class="brand-font text-2xl text-stone-800 hover:text-amber-600 transition-colors">
                         Iffy's Life
                     </a>
                 </div>
@@ -135,8 +120,8 @@
                         </button>
                         <!-- Dropdown Content -->
                         <div class="absolute left-0 top-14 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block border border-stone-100">
-                            <a href="#" onclick="navigateTo('reading-2025'); return false;" class="block px-4 py-2 text-sm text-stone-700 hover:bg-amber-50 hover:text-amber-700 font-bold bg-stone-50">
-                                2025閱讀足跡
+                            <a href="2025Reading.html" class="block px-4 py-2 text-sm text-stone-700 bg-amber-50 text-amber-700 font-bold">
+                                2025回顧
                             </a>
                         </div>
                     </div>
@@ -160,36 +145,13 @@
                 <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50 pl-6">2024北海道</a>
                 
                 <div class="px-3 py-2 text-xs font-bold text-stone-400 uppercase tracking-wider mt-2">閱讀 My Reading</div>
-                <a href="#" onclick="navigateTo('reading-2025'); return false;" class="block px-3 py-2 rounded-md text-base font-medium text-amber-600 bg-amber-50 pl-6">2025閱讀足跡</a>
+                <a href="2025Reading.html" class="block px-3 py-2 rounded-md text-base font-medium text-amber-600 bg-amber-50 pl-6">2025回顧</a>
             </div>
         </div>
     </nav>
 
-    <!-- ================= PAGE CONTENT ================= -->
-
-    <!-- PAGE 1: HOME (Restored this section so it's not empty!) -->
-    <div id="page-home" class="flex-grow flex items-center justify-center bg-white fade-in-section">
-        <section class="max-w-4xl mx-auto px-4 text-center py-20">
-            <div class="w-32 h-32 bg-stone-200 rounded-full mx-auto mb-8 flex items-center justify-center text-5xl shadow-inner">
-                🌿
-            </div>
-            <h1 class="text-5xl md:text-6xl font-bold text-stone-800 mb-6 tracking-tight">Hello, I'm Iffy.</h1>
-            <div class="h-1 w-20 bg-amber-500 mx-auto mb-8 rounded-full"></div>
-            <p class="text-xl md:text-2xl text-stone-600 leading-relaxed max-w-2xl mx-auto mb-10 font-light">
-                喜愛閱讀、自我獨處與旅行。<br>
-                在文字中尋找共鳴，在生活中實踐所學。<br>
-                歡迎來到我的閱讀與旅行紀錄。
-            </p>
-            <div class="flex justify-center gap-4">
-                <button onclick="navigateTo('reading-2025')" class="bg-stone-800 text-white px-8 py-4 rounded-full hover:bg-stone-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-bold text-lg">
-                    探索 2025 閱讀足跡
-                </button>
-            </div>
-        </section>
-    </div>
-
-    <!-- PAGE 2: READING REPORT (Hidden by default, Dark Style) -->
-    <div id="reading-report" class="bg-stone-50/50 pb-24 flex-grow hidden fade-in-section">
+    <!-- Reading Report Content Wrapper -->
+    <div id="reading-report" class="bg-stone-50/50 pb-24 flex-grow">
         
         <!-- Report Header (Dark Style) -->
         <div class="bg-stone-800 text-stone-100 py-20 px-4 shadow-lg mb-8">
@@ -258,7 +220,7 @@
                                 <span class="text-xl mr-2">🔥</span>
                                 <div>
                                     <strong class="text-stone-800 block mb-1">讀書會的推坑效應</strong>
-                                    9月加入了 Booktuber Cari 的讀書會，成員間的熱情分享讓閱讀慾望大增，直接引爆了第四季的閱讀狂潮。
+                                    9月加入了 Booktuber Cari 的奇幻讀書會，成員間的熱情分享讓閱讀慾望大增，直接引爆了第四季的閱讀狂潮。
                                 </div>
                             </li>
                             <li class="flex items-start">
@@ -272,7 +234,7 @@
                                 <span class="text-xl mr-2">🏎️</span>
                                 <div>
                                     <strong class="text-stone-800 block mb-1">極速與長跑</strong>
-                                    有些書 1 天讀完（如《一瞬之光》），而《城與不確定的牆》則陪伴您 38 天。您能自如切換閱讀檔位。
+                                    有些書 1 天讀完（如《便利店人間》），而《城與不確定的牆》則陪伴您 38 天。您能自如切換閱讀檔位。
                                 </div>
                             </li>
                         </ul>
@@ -300,12 +262,12 @@
                     <div class="space-y-6">
                         <div class="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
                             <h4 class="font-bold text-purple-900 mb-1">🧙‍♂️ 奇幻/科幻 (Fantasy/Sci-Fi)</h4>
-                            <p class="text-sm text-purple-800">數量最多。您喜愛世界觀完整的系列作，如《香君》、《階梯之城》、《小書痴的下剋上》。這類書籍是您的主力精神食糧。</p>
+                            <p class="text-sm text-purple-800">數量最多。您喜愛世界觀完整的系列作，如《香君》、《小書痴》、《城與不確定的牆》。這類書籍是您的主力精神食糧。</p>
                         </div>
 
                         <div class="p-4 bg-teal-50 rounded-lg border-l-4 border-teal-500">
                             <h4 class="font-bold text-teal-900 mb-1">🇹🇼 台灣文學/歷史 (Taiwan Lit)</h4>
-                            <p class="text-sm text-teal-800">這是今年的亮點。受到台灣文學作家朱宥勳頻道的啟發，您深入探索了台灣文學的世界，主動挖掘了許多本土作家的精彩作品。</p>
+                            <p class="text-sm text-teal-800">這是今年的亮點。受到 YouTuber 朱宥勳頻道的啟發，您深入探索了台灣文學的世界，主動挖掘了許多本土作家的精彩作品。</p>
                         </div>
 
                         <div class="p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500">
@@ -322,7 +284,7 @@
                     <div class="mb-6">
                         <h3 class="text-3xl font-bold text-stone-800 mb-4 inline-block border-b-4 border-stone-800 pb-2">⭐ 2025 年度之最 (Hall of Fame)</h3>
                         <p class="text-stone-600 max-w-xl mx-auto text-lg mt-2">
-                            根據您的評價與閱讀數據，我們精選了今年的代表作。點擊下方按鈕切換不同獎項。
+                            根據您的 6 星超高評價與閱讀數據，我們精選了今年的代表作。點擊下方按鈕切換不同獎項。
                         </p>
                     </div>
                     <!-- Filter Buttons -->
@@ -406,7 +368,12 @@
     <footer id="contact" class="bg-stone-900 text-stone-400 py-12 mt-auto">
         <div class="max-w-6xl mx-auto px-4 text-center">
             <h2 class="brand-font text-2xl text-stone-100 mb-6">Iffy's Life</h2>
-            
+            <div class="flex justify-center space-x-6 mb-8">
+                <!-- Social Links Placeholders -->
+                <a href="#" class="hover:text-amber-500 transition-colors">GitHub</a>
+                <a href="#" class="hover:text-amber-500 transition-colors">Instagram</a>
+                <a href="#" class="hover:text-amber-500 transition-colors">Email</a>
+            </div>
             <p class="text-xs text-stone-600">
                 &copy; 2026 Iffy's Life. <br>
                 Based on Notion Data Export.
@@ -416,27 +383,6 @@
 
     <!-- JavaScript Logic -->
     <script>
-        // --- Navigation Logic (Simple Router) ---
-        function navigateTo(pageId) {
-            const homePage = document.getElementById('page-home');
-            const readingPage = document.getElementById('reading-report');
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            if (pageId === 'home') {
-                homePage.classList.remove('hidden');
-                readingPage.classList.add('hidden');
-            } else if (pageId === 'reading-2025') {
-                homePage.classList.add('hidden');
-                readingPage.classList.remove('hidden');
-                // Trigger chart resize in case of display issues on first load
-                if (window.myCharts) {
-                    window.myCharts.forEach(c => c.resize());
-                }
-            }
-        }
-
         // --- Data Storage (Extracted from Report) ---
         const readingData = {
             monthlyStats: [0, 0, 1, 0, 0, 0, 0, 2, 4, 10, 7, 13], 
