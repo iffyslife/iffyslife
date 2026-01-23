@@ -28,9 +28,7 @@
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            /* Removed max-width to allow grid to control sizing fully, preventing overlap */
             height: 300px;
             max-height: 400px;
         }
@@ -76,6 +74,20 @@
             from { opacity: 0; transform: translateY(-5px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        /* Book Wall Background Animation */
+        @keyframes floatText {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        .book-bg-text {
+            animation: floatText 6s ease-in-out infinite;
+        }
+
+        /* Image Zoom Cursors */
+        .cursor-grab { cursor: grab; }
+        .cursor-grabbing { cursor: grabbing; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
@@ -104,7 +116,7 @@
                         </button>
                         <!-- Dropdown Content -->
                         <div class="absolute left-0 top-14 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block border border-stone-100">
-                            <a href="2024.html" class="block px-4 py-2 text-sm text-stone-700 hover:bg-amber-50 hover:text-amber-700">
+                            <a href="index.html" class="block px-4 py-2 text-sm text-stone-700 hover:bg-amber-50 hover:text-amber-700">
                                 2024北海道
                             </a>
                         </div>
@@ -121,7 +133,7 @@
                         <!-- Dropdown Content -->
                         <div class="absolute left-0 top-14 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block border border-stone-100">
                             <a href="2025Reading.html" class="block px-4 py-2 text-sm text-stone-700 bg-amber-50 text-amber-700 font-bold">
-                                2025閱讀足跡
+                                2025回顧
                             </a>
                         </div>
                     </div>
@@ -203,7 +215,8 @@
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm">
+                    <!-- Added min-w-0 to prevent flex/grid item overflow issue -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm min-w-0">
                         <h4 class="text-lg font-bold text-stone-700 mb-4 flex items-center">
                             <span class="bg-amber-100 text-amber-800 px-2 py-1 rounded text-xs mr-2 font-sans font-bold">趨勢</span>
                             月度閱讀量統計
@@ -220,7 +233,7 @@
                                 <span class="text-xl mr-2">🔥</span>
                                 <div>
                                     <strong class="text-stone-800 block mb-1">讀書會的推坑效應</strong>
-                                    9月加入了 Booktuber Cari 的奇幻讀書會，成員間的熱情分享讓閱讀慾望大增，直接引爆了第四季的閱讀狂潮。
+                                    9月加入了 Booktuber Cari 的線上讀書會，成員間的熱情分享讓閱讀慾望大增，直接引爆了第四季的閱讀狂潮。
                                 </div>
                             </li>
                             <li class="flex items-start">
@@ -234,7 +247,7 @@
                                 <span class="text-xl mr-2">🏎️</span>
                                 <div>
                                     <strong class="text-stone-800 block mb-1">極速與長跑</strong>
-                                    有些書 1 天讀完（如《便利店人間》），而《城與不確定的牆》則陪伴您 38 天。您能自如切換閱讀檔位。
+                                    有些書 1 天讀完（如《一瞬之光》），而《城與不確定的牆》則陪伴您 38 天。您能自如切換閱讀檔位。
                                 </div>
                             </li>
                         </ul>
@@ -262,7 +275,7 @@
                     <div class="space-y-6">
                         <div class="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
                             <h4 class="font-bold text-purple-900 mb-1">🧙‍♂️ 奇幻/科幻 (Fantasy/Sci-Fi)</h4>
-                            <p class="text-sm text-purple-800">數量最多。您喜愛世界觀完整的系列作，如《香君》、《小書痴》、《城與不確定的牆》。這類書籍是您的主力精神食糧。</p>
+                            <p class="text-sm text-purple-800">數量最多。您喜愛世界觀完整的系列作，如《香君》、《階梯之城》、《不馴之翼》。這類書籍是您的主力精神食糧。</p>
                         </div>
 
                         <div class="p-4 bg-teal-50 rounded-lg border-l-4 border-teal-500">
@@ -284,7 +297,7 @@
                     <div class="mb-6">
                         <h3 class="text-3xl font-bold text-stone-800 mb-4 inline-block border-b-4 border-stone-800 pb-2">⭐ 2025 年度之最 (Hall of Fame)</h3>
                         <p class="text-stone-600 max-w-xl mx-auto text-lg mt-2">
-                            根據您的 6 星超高評價與閱讀數據，我們精選了今年的代表作。點擊下方按鈕切換不同獎項。
+                            根據評價與閱讀數據，精選了今年的代表作。<br>點擊下方按鈕切換不同獎項。
                         </p>
                     </div>
                     <!-- Filter Buttons -->
@@ -292,6 +305,7 @@
                         <button class="filter-btn active px-5 py-2 rounded-full text-base font-medium bg-stone-800 text-white transition-colors" data-filter="all">全部展示</button>
                         <button class="filter-btn px-5 py-2 rounded-full text-base font-medium bg-stone-200 text-stone-600 hover:bg-teal-100 hover:text-teal-800 transition-colors" data-filter="page-turner">🚀 最佳體驗</button>
                         <button class="filter-btn px-5 py-2 rounded-full text-base font-medium bg-stone-200 text-stone-600 hover:bg-indigo-100 hover:text-indigo-800 transition-colors" data-filter="challenge">🐢 最具挑戰</button>
+                        <button class="filter-btn px-5 py-2 rounded-full text-base font-medium bg-stone-200 text-stone-600 hover:bg-rose-100 hover:text-rose-800 transition-colors" data-filter="unique-style">🎨 最具風格</button>
                     </div>
                 </div>
 
@@ -301,7 +315,7 @@
             </section>
 
             <!-- Section 3.5: Missed Connections -->
-            <section id="missed-connections" class="border-t border-stone-200 pt-16">
+            <section id="missed-connections" class="border-t border-stone-200 pt-16 mt-16">
                 <div class="mb-10 text-center">
                     <h3 class="text-3xl font-bold text-stone-500 mb-4 inline-block border-b-4 border-stone-300 pb-2 flex items-center justify-center">
                         <span class="mr-3 opacity-50 text-2xl">💔</span> 
@@ -314,6 +328,28 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="missed-grid">
                     <!-- Content populated by JS -->
+                </div>
+            </section>
+
+            <!-- Section 3.1: Full Book List (Interactive Background) - Moved Here -->
+            <section id="full-book-list" class="relative py-16 overflow-hidden bg-stone-100 border-y border-stone-200 mt-16 cursor-pointer hover:bg-stone-50 transition-colors group" onclick="openBookListModal()">
+                
+                <!-- Background Text Layer (Absolute Positioned) -->
+                <div id="book-wall-bg" class="absolute inset-0 flex flex-wrap content-center justify-center gap-x-8 gap-y-6 opacity-10 pointer-events-none select-none p-4 overflow-hidden">
+                    <!-- Content populated by JS -->
+                </div>
+
+                <!-- Foreground Content (Centered Card) -->
+                <div class="relative z-10 container mx-auto px-4 text-center pointer-events-none">
+                    <div class="inline-block bg-white/90 backdrop-blur-sm p-10 rounded-3xl shadow-xl border border-white/50 transform group-hover:scale-105 transition-transform duration-300">
+                        <span class="text-4xl mb-4 block">📚</span>
+                        <h3 class="text-3xl md:text-4xl font-bold text-stone-800 mb-2">2025 書單全紀錄</h3>
+                        <div class="h-1 w-16 bg-amber-500 mx-auto my-4 rounded-full"></div>
+                        <p class="text-stone-600 text-lg font-medium">共閱讀 <span class="text-amber-600 font-bold text-2xl mx-1">55</span> 本書</p>
+                        <p class="text-stone-400 text-sm mt-3 flex items-center justify-center gap-2">
+                            <span class="animate-pulse">👆</span> 點擊查看完整書單圖片
+                        </p>
+                    </div>
                 </div>
             </section>
 
@@ -369,8 +405,10 @@
         <div class="max-w-6xl mx-auto px-4 text-center">
             <h2 class="brand-font text-2xl text-stone-100 mb-6">Iffy's Life</h2>
             <div class="flex justify-center space-x-6 mb-8">
-                <!-- Social Links Placeholders -->
-                <a href="#" class="hover:text-amber-500 transition-colors"> GO TOP</a>
+                <!-- Go Top Link -->
+                <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="hover:text-amber-500 transition-colors font-bold tracking-widest uppercase text-sm border border-stone-700 px-4 py-2 rounded-full hover:border-amber-500 hover:bg-stone-800">
+                    ↑ Go Top
+                </a>
             </div>
             <p class="text-xs text-stone-600">
                 &copy; 2026 Iffy's Life. <br>
@@ -379,8 +417,145 @@
         </div>
     </footer>
 
+    <!-- Image Modal (Zoomable & Draggable) -->
+    <div id="book-list-modal" class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-sm transition-opacity duration-300 opacity-0 overflow-hidden">
+        
+        <!-- Controls Toolbar -->
+        <div class="absolute top-0 left-0 w-full z-[60] flex justify-between items-center p-4 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
+            <span class="text-white/70 text-sm font-sans ml-2 pointer-events-auto bg-black/30 px-3 py-1 rounded-full backdrop-blur-md border border-white/10">
+                🖱️ 滾輪縮放 / 拖曳移動
+            </span>
+            <div class="flex gap-3 pointer-events-auto">
+                <button onclick="adjustZoom(0.2)" class="text-white hover:text-amber-400 p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all backdrop-blur-md border border-white/10 shadow-lg" title="放大">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path></svg>
+                </button>
+                <button onclick="resetZoom()" class="text-white hover:text-amber-400 p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all backdrop-blur-md border border-white/10 shadow-lg" title="重置">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </button>
+                <button onclick="adjustZoom(-0.2)" class="text-white hover:text-amber-400 p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all backdrop-blur-md border border-white/10 shadow-lg" title="縮小">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"></path></svg>
+                </button>
+                <div class="w-px h-8 bg-white/20 mx-2"></div>
+                <button onclick="closeBookListModal()" class="text-white hover:text-rose-500 p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all backdrop-blur-md border border-white/10 shadow-lg" title="關閉">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Image Container -->
+        <div id="modal-img-container" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing overflow-hidden select-none">
+            <img id="modal-image" src="2025閱讀清單.jpg" alt="2025閱讀書單完整圖片" class="max-w-none max-h-[90vh] object-contain transition-transform duration-75 ease-linear origin-center shadow-2xl" draggable="false">
+        </div>
+    </div>
+
     <!-- JavaScript Logic -->
     <script>
+        // FIX: Initialize global charts array to prevent "push" error
+        window.myCharts = [];
+
+        // --- Modal Zoom & Pan Logic ---
+        let currentScale = 1;
+        let currentTranslateX = 0;
+        let currentTranslateY = 0;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+
+        function openBookListModal() {
+            const modal = document.getElementById('book-list-modal');
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; // Trigger reflow
+            modal.classList.remove('opacity-0');
+            document.body.style.overflow = 'hidden';
+            
+            // Reset state
+            resetZoom();
+            
+            // Add listeners
+            const container = document.getElementById('modal-img-container');
+            container.addEventListener('wheel', handleWheel, { passive: false });
+            container.addEventListener('mousedown', handleMouseDown);
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('mouseup', handleMouseUp);
+        }
+
+        function closeBookListModal() {
+            const modal = document.getElementById('book-list-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+            
+            // Remove listeners
+            const container = document.getElementById('modal-img-container');
+            if(container) {
+                container.removeEventListener('wheel', handleWheel);
+                container.removeEventListener('mousedown', handleMouseDown);
+            }
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        }
+
+        function handleWheel(e) {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            adjustZoom(delta);
+        }
+
+        function adjustZoom(delta) {
+            const newScale = currentScale + delta;
+            // Limit scale between 0.5x and 5x
+            if (newScale >= 0.5 && newScale <= 5) {
+                currentScale = newScale;
+                updateImageTransform();
+            }
+        }
+
+        function resetZoom() {
+            currentScale = 1;
+            currentTranslateX = 0;
+            currentTranslateY = 0;
+            updateImageTransform();
+        }
+
+        function handleMouseDown(e) {
+            // Only drag if left click
+            if (e.button !== 0) return;
+            isDragging = true;
+            // Calculate start position relative to current translation
+            startX = e.clientX - currentTranslateX;
+            startY = e.clientY - currentTranslateY;
+            
+            const container = document.getElementById('modal-img-container');
+            container.classList.add('cursor-grabbing');
+            container.classList.remove('cursor-grab');
+        }
+
+        function handleMouseMove(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            currentTranslateX = e.clientX - startX;
+            currentTranslateY = e.clientY - startY;
+            updateImageTransform();
+        }
+
+        function handleMouseUp() {
+            isDragging = false;
+            const container = document.getElementById('modal-img-container');
+            if(container) {
+                container.classList.remove('cursor-grabbing');
+                container.classList.add('cursor-grab');
+            }
+        }
+
+        function updateImageTransform() {
+            const img = document.getElementById('modal-image');
+            if(img) {
+                img.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px) scale(${currentScale})`;
+            }
+        }
+
         // --- Data Storage (Extracted from Report) ---
         const readingData = {
             monthlyStats: [0, 0, 1, 0, 0, 0, 0, 2, 4, 10, 7, 13], 
@@ -398,15 +573,6 @@
                     desc: "讓人捨不得讀完的神作！描述擁有超常嗅覺、能聽見植物「聲音」的少女，揭開帝國依賴「歐阿勒稻」背後的秘密。結合植物學與政治角力，久違的滿分故事。",
                     tags: ["奇幻", "長篇", "6星"],
                     color: "bg-purple-700"
-                },
-                {
-                    title: "梅雨",
-                    author: "施益堅",
-                    category: "other",
-                    stars: 6,
-                    desc: "近年讀過最深沉之作。以冷靜筆法與「留白」描寫歷史創傷，後勁極強。如梅雨般持續滲入土地與人心，久久無法抽離。",
-                    tags: ["台灣文學", "歷史", "6星"],
-                    color: "bg-teal-700"
                 },
                 {
                     title: "渺小一生",
@@ -427,6 +593,15 @@
                     color: "bg-stone-600"
                 },
                 {
+                    title: "梅雨",
+                    author: "施益堅",
+                    category: "challenge",
+                    stars: 6,
+                    desc: "近年讀過最深沉之作。以冷靜筆法與「留白」描寫歷史創傷，後勁極強。如梅雨般持續滲入土地與人心，久久無法抽離。",
+                    tags: ["台灣文學", "歷史", "6星"],
+                    color: "bg-teal-700"
+                },
+                {
                     title: "正念旅程",
                     author: "卡蘿莉恩．諾特貝特",
                     category: "page-turner",
@@ -438,7 +613,7 @@
                 {
                     title: "鄰女",
                     author: "王定國",
-                    category: "other",
+                    category: "unique-style",
                     stars: 5,
                     desc: "初讀王定國，氛圍淡然卻透著憂傷。從殺妻出獄男子的視角，穿插回憶層層揭開夫妻羈絆、消失的時光與弒妻背後的真相。敘事自成一格，餘韻無窮。",
                     tags: ["台灣文學", "中篇", "女性"],
@@ -456,7 +631,7 @@
                 {
                     title: "他們沒在寫小說的時候",
                     author: "朱宥勳",
-                    category: "other",
+                    category: "unique-style",
                     stars: 5,
                     desc: "戒嚴時期的文學家群像，歷史與文學的交織，發人深省。",
                     tags: ["文學", "歷史", "散文"],
@@ -465,7 +640,7 @@
                 {
                     title: "編舟記",
                     author: "三浦紫苑",
-                    category: "other",
+                    category: "page-turner",
                     stars: 5,
                     desc: "如《強風吹拂》般的慢熱神作。撐過前期的緩慢鋪陳，隨十五年時光流逝，見證眾人為「大渡海」付出的心血與松本老師的遺憾，後勁強到讓人淚流不止。",
                     tags: ["療癒", "長篇", "職人"],
@@ -503,10 +678,21 @@
                     reason: "吸引力不足",
                     comment: "讀了一部份，沒有特別吸引我讀下去的情節。"
                 }
+            ],
+            fullBookList: [
+                "獵女犯：台灣特別志願兵的回憶", "魚眼", "眾神之島1 (2)", "落九花", "昨日雨水",
+                "小書痴的下剋上：第一部 士兵的女兒", "風暴之子2：召喚曙光的少女", "隱藏的火花", "一瞬之光", "不馴之翼",
+                "台灣漫遊錄", "我的工作是惡魔", "只能用4H鉛筆", "台灣使用指南", "風暴之子：失落的臺灣古文明",
+                "鄰女", "他們沒在寫小說的時候", "雲端咕咕國", "如果在冬夜，一個旅人", "鯨",
+                "破戰者(上)", "天才神秘會社I 迷屋的考驗", "人浮於愛", "變成自己想望的大人", "渺小一生",
+                "進烤箱的好日子", "軌道", "Colorful～借來的100天", "梅雨", "蓮花莊",
+                "階梯之城/聖劍之城", "第一次的…", "尋找唐吉訶德", "挪威的森林", "緞帶",
+                "遺留的殺意", "東京角落美食", "13.67", "素食者", "地獄修業旅行",
+                "火車", "魚夜", "錯時錯地", "編舟記", "荒境列車之旅",
+                "長期買進", "說不出口的, 更需要被聽懂", "心流", "過曝世代", "正念旅程",
+                "你就是困住自己的那座山", "香君(上)(下)", "倒數10分又38秒", "午夜圖書館", "城與不確定的牆"
             ]
         };
-
-        window.myCharts = [];
 
         // --- Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -515,6 +701,7 @@
             initGenreChart();
             renderBooks('all');
             renderMissedBooks();
+            renderFullList(); 
             initFilters();
             
             // Mobile menu toggle logic
@@ -665,6 +852,7 @@
                 let icon = '📚';
                 if(book.category === 'page-turner') icon = '🚀';
                 if(book.category === 'challenge') icon = '🧗';
+                if(book.category === 'unique-style') icon = '🎨';
 
                 // Create Card HTML
                 const card = document.createElement('div');
@@ -728,15 +916,43 @@
             });
         }
 
+        // --- Render Full Book List (Background Style) ---
+        function renderFullList() {
+            const container = document.getElementById('book-wall-bg');
+            container.innerHTML = '';
+            
+            // Shuffle function to make the wall look more random/organic
+            const shuffledList = [...readingData.fullBookList].sort(() => 0.5 - Math.random());
+            
+            // Duplicate the list to ensure density
+            const displayList = [...shuffledList, ...shuffledList];
+
+            displayList.forEach((title, index) => {
+                const span = document.createElement('span');
+                // Styling for the background text
+                span.className = 'book-bg-text text-xl md:text-2xl font-bold text-stone-900 whitespace-nowrap';
+                
+                // Add slight random animation delay for natural floating effect
+                span.style.animationDelay = `${Math.random() * 5}s`;
+                // Randomize opacity slightly for texture
+                span.style.opacity = 0.5 + Math.random() * 0.5; 
+                
+                span.textContent = title;
+                container.appendChild(span);
+            });
+        }
+
         // --- Filter Logic ---
         function initFilters() {
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => {
                 btn.addEventListener('click', () => {
+                    // Remove active class
                     buttons.forEach(b => {
                         b.classList.remove('bg-stone-800', 'text-white');
                         b.classList.add('bg-stone-200', 'text-stone-600');
                     });
+                    // Add active class
                     btn.classList.remove('bg-stone-200', 'text-stone-600');
                     btn.classList.add('bg-stone-800', 'text-white');
                     
