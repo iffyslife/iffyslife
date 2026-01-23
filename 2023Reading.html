@@ -1,0 +1,840 @@
+<!-- Chosen Palette: Warm Paper & Ink (Stone, Amber, Slate, Teal) - 2023 Edition -->
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2023 年度閱讀足跡 | Iffy's Life</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Fonts: Zen Maru Gothic for Headers, Noto Sans TC for Body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Zen+Maru+Gothic:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #292524; /* stone-800 */
+        }
+        
+        h1, h2, h3, h4, .brand-font, .rounded-font, .counter {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            font-weight: 700; 
+        }
+        
+        /* Chart Container Styling */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e7e5e4; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a8a29e; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #78716c; 
+        }
+
+        .book-card, .missed-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s;
+        }
+        .book-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .missed-card:hover {
+            background-color: #fafaf9;
+            border-color: #d6d3d1;
+        }
+
+        /* Book Wall Background Animation */
+        @keyframes floatText {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        .book-bg-text {
+            animation: floatText 6s ease-in-out infinite;
+        }
+
+        /* Image Modal */
+        .cursor-grab { cursor: grab; }
+        .cursor-grabbing { cursor: grabbing; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation Bar Placeholder -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Reading Report Content Wrapper -->
+    <div id="reading-report" class="bg-stone-50/50 pb-24 flex-grow">
+        
+        <!-- Report Header (Dark Style) -->
+        <div class="bg-stone-800 text-stone-100 py-20 px-4 shadow-lg mb-8">
+            <div class="max-w-6xl mx-auto text-center">
+                <span class="text-amber-500 tracking-widest text-sm font-bold uppercase mb-2 font-sans block">Year in Review</span>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">2023 年度閱讀足跡</h2>
+                <p class="text-stone-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                    這是充滿音樂與懸疑的一年。從春季的密集推理馬拉松，到年底與《鏡之孤城》的相遇，這份報告記錄了 34 本書的旅程。
+                </p>
+            </div>
+        </div>
+
+        <!-- KPI Cards (Overlapping) -->
+        <section class="max-w-6xl mx-auto px-4 mb-16 relative z-10 -mt-20">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-amber-500 text-center">
+                    <div class="text-3xl mb-1">📚</div>
+                    <div class="text-4xl font-bold text-stone-800 counter" data-target="32">0</div>
+                    <div class="text-sm text-stone-500 font-medium mt-1">總接觸書目</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-teal-500 text-center">
+                    <div class="text-3xl mb-1">✅</div>
+                    <div class="text-4xl font-bold text-stone-800 counter" data-target="26">0</div>
+                    <div class="text-sm text-stone-500 font-medium mt-1">完成閱讀</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-rose-500 text-center">
+                    <div class="text-3xl mb-1">⭐</div>
+                    <!-- Calculated approx avg rating -->
+                    <div class="text-4xl font-bold text-stone-800 counter-static">3.6</div>
+                    <div class="text-sm text-stone-500 font-medium mt-1">平均評分 (5星制)</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-indigo-500 text-center">
+                    <div class="text-3xl mb-1">⚡</div>
+                    <div class="text-4xl font-bold text-stone-800 counter-static">8.8</div>
+                    <div class="text-sm text-stone-500 font-medium mt-1">平均天數/本</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <main class="max-w-6xl mx-auto px-4 space-y-20">
+
+            <!-- Section 1: Temporal Analysis -->
+            <section id="time-analysis">
+                <div class="mb-10 text-center">
+                    <h3 class="text-3xl font-bold text-stone-800 mb-4 inline-block border-b-4 border-amber-500 pb-2">⏳ 時間軸與閱讀節奏</h3>
+                    <p class="text-stone-600 leading-relaxed max-w-3xl mx-auto mt-2 text-lg">
+                        2023 年的閱讀能量集中在上半年。3 月與 4 月是絕對的高峰，兩個月內接觸了近 20 本書，這段時間您沉浸在音樂推理與歷史的長河中。下半年節奏放緩，但年底的《鏡之孤城》為整年畫下完美句點。
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                    <!-- Added min-w-0 to prevent flex/grid item overflow issue -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm min-w-0">
+                        <h4 class="text-lg font-bold text-stone-700 mb-4 flex items-center">
+                            <span class="bg-amber-100 text-amber-800 px-2 py-1 rounded text-xs mr-2 font-sans font-bold">趨勢</span>
+                            月度閱讀量統計
+                        </h4>
+                        <div class="chart-container">
+                            <canvas id="monthlyChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
+                        <h4 class="text-lg font-bold text-stone-700 mb-4">節奏洞察</h4>
+                        <ul class="space-y-4 text-sm text-stone-600">
+                            <li class="flex items-start">
+                                <span class="text-xl mr-2">🎻</span>
+                                <div>
+                                    <strong class="text-stone-800 block mb-1">音樂推理馬拉松</strong>
+                                    4 月份密集閱讀了中山七里的「音樂推理」系列（拉赫曼尼諾夫、貝多芬、德布西），享受了音樂與謎題交織的饗宴。
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-xl mr-2">🏰</span>
+                                <div>
+                                    <strong class="text-stone-800 block mb-1">年末的神作</strong>
+                                    12 月雖然只讀了一本書，但這本《鏡之孤城》耗時 30 天細細品味，並獲得了年度唯一的 6 星評價。
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-xl mr-2">🔍</span>
+                                <div>
+                                    <strong class="text-stone-800 block mb-1">尋找共鳴的過程</strong>
+                                    這一年有不少標記為「中斷閱讀」的書籍（如《正常人》、《瓦力唱片行》），顯示您在尋找對頻書籍的過程中，勇於嘗試也勇於放棄。
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Genre & Preference -->
+            <section id="genre-analysis" class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="mb-10 text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl font-bold text-stone-800 mb-4 inline-block border-b-4 border-teal-500 pb-2">🏷️ 閱讀口味與類型分佈</h3>
+                    <p class="text-stone-600 text-lg">
+                        懸疑推理是 2023 年的主旋律，佔據了閱讀量的近半數。除了追求解謎的快感，您也涉獵了不少療癒系小說與奇幻作品，試圖在理性與感性之間取得平衡。
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="flex flex-col items-center">
+                        <h4 class="text-lg font-bold text-stone-700 mb-2">書籍類型佔比</h4>
+                        <div class="chart-container" style="max-height: 350px;">
+                            <canvas id="genreChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-slate-500">
+                            <h4 class="font-bold text-slate-900 mb-1">🔍 懸疑推理 (Mystery)</h4>
+                            <p class="text-sm text-slate-800">絕對的主力。從中山七里到泰絲·格里森，您沉浸在各種不同風格的謎團之中。</p>
+                        </div>
+
+                        <div class="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+                            <h4 class="font-bold text-purple-900 mb-1">🧙‍♂️ 奇幻/科幻 (Fantasy/Sci-Fi)</h4>
+                            <p class="text-sm text-purple-800">第二大類別。包含了年度神作《鏡之孤城》以及《時空旅人的沙漏》等精彩作品。</p>
+                        </div>
+
+                        <div class="p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+                            <h4 class="font-bold text-orange-900 mb-1">🧘 療癒/心理勵志 (Healing)</h4>
+                            <p class="text-sm text-orange-800">在緊張的推理之外，提供了溫暖的調劑。如《在樹下傳達神諭的貓》與《內向心理學》。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Hall of Fame -->
+            <section id="hall-of-fame">
+                <div class="mb-10 text-center border-b border-stone-200 pb-8">
+                    <div class="mb-6">
+                        <h3 class="text-3xl font-bold text-stone-800 mb-4 inline-block border-b-4 border-stone-800 pb-2">⭐ 2023 年度之最 (Hall of Fame)</h3>
+                        <p class="text-stone-600 max-w-xl mx-auto text-lg mt-2">
+                            根據評價與閱讀數據，精選了今年的代表作。<br>點擊下方按鈕切換不同獎項。
+                        </p>
+                    </div>
+                    <!-- Filter Buttons -->
+                    <div class="flex justify-center flex-wrap gap-2" id="filter-buttons">
+                        <button class="filter-btn active px-5 py-2 rounded-full text-base font-medium bg-stone-800 text-white transition-colors" data-filter="all">全部展示</button>
+                        <button class="filter-btn px-5 py-2 rounded-full text-base font-medium bg-stone-200 text-stone-600 hover:bg-teal-100 hover:text-teal-800 transition-colors" data-filter="page-turner">🚀 最佳體驗</button>
+                        <button class="filter-btn px-5 py-2 rounded-full text-base font-medium bg-stone-200 text-stone-600 hover:bg-indigo-100 hover:text-indigo-800 transition-colors" data-filter="challenge">🐢 最具挑戰</button>
+                        <button class="filter-btn px-5 py-2 rounded-full text-base font-medium bg-stone-200 text-stone-600 hover:bg-rose-100 hover:text-rose-800 transition-colors" data-filter="favorite">❤️ 年度最愛</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="book-grid">
+                    <!-- Content populated by JS -->
+                </div>
+            </section>
+
+            <!-- Section 3.5: Missed Connections -->
+            <section id="missed-connections" class="border-t border-stone-200 pt-16 mt-16">
+                <div class="mb-10 text-center">
+                    <h3 class="text-3xl font-bold text-stone-500 mb-4 inline-block border-b-4 border-stone-300 pb-2 flex items-center justify-center">
+                        <span class="mr-3 opacity-50 text-2xl">💔</span> 
+                        頻率未對齊的篇章
+                    </h3>
+                    <p class="text-stone-500 max-w-3xl mx-auto text-lg mt-2">
+                        閱讀是極為主觀的體驗。以下這幾本雖然在市場上或許備受好評，但在今年的旅途中，我們暫時擦身而過。
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="missed-grid">
+                    <!-- Content populated by JS -->
+                </div>
+            </section>
+
+            <!-- Section 3.1: Full Book List (Interactive Background) -->
+            <section id="full-book-list" class="relative py-16 overflow-hidden bg-stone-100 border-y border-stone-200 mt-16 cursor-pointer hover:bg-stone-50 transition-colors group" onclick="openBookListModal()">
+                
+                <!-- Background Text Layer (Absolute Positioned) -->
+                <div id="book-wall-bg" class="absolute inset-0 flex flex-wrap content-center justify-center gap-x-8 gap-y-6 opacity-10 pointer-events-none select-none p-4 overflow-hidden">
+                    <!-- Content populated by JS -->
+                </div>
+
+                <!-- Foreground Content (Centered Card) -->
+                <div class="relative z-10 container mx-auto px-4 text-center pointer-events-none">
+                    <div class="inline-block bg-white/90 backdrop-blur-sm p-10 rounded-3xl shadow-xl border border-white/50 transform group-hover:scale-105 transition-transform duration-300">
+                        <span class="text-4xl mb-4 block">📚</span>
+                        <h3 class="text-3xl md:text-4xl font-bold text-stone-800 mb-2">2023 書單全紀錄</h3>
+                        <div class="h-1 w-16 bg-amber-500 mx-auto my-4 rounded-full"></div>
+                        <p class="text-stone-600 text-lg font-medium">共閱讀 <span class="text-amber-600 font-bold text-2xl mx-1">32</span> 本書</p>
+                        <p class="text-stone-400 text-sm mt-3 flex items-center justify-center gap-2">
+                            <span class="animate-pulse">👆</span> 點擊查看完整書單圖片
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: 2024 Recommendations (Looking Forward) -->
+            <section class="bg-gradient-to-r from-stone-800 to-stone-700 text-stone-100 rounded-2xl p-8 md:p-12 relative overflow-hidden mt-16 text-center shadow-xl">
+                <!-- Decorative circle -->
+                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-stone-600 opacity-20"></div>
+                
+                <h3 class="text-3xl md:text-4xl font-bold mb-10 relative z-10 inline-block border-b-4 border-stone-500 pb-2">📝 邁向 2024 的閱讀展望</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10 text-left">
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-amber-500 flex items-center justify-center text-stone-900 font-bold text-lg font-sans">1</div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-amber-400">拓展閱讀邊界</h4>
+                                <p class="text-stone-300 text-sm mt-1">2023 集中在懸疑推理，2024 可以嘗試增加投資理財或心理學書籍的比重，豐富知識面向。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-teal-500 flex items-center justify-center text-stone-900 font-bold text-lg font-sans">2</div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-teal-400">尋找更多神作</h4>
+                                <p class="text-stone-300 text-sm mt-1">《鏡之孤城》帶來的感動是無可取代的。新的一年，繼續尋找那些能觸動靈魂深處的故事吧。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-stone-900 text-stone-400 py-12 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="brand-font text-2xl text-stone-100 mb-6">Iffy's Life</h2>
+            <div class="flex justify-center space-x-6 mb-8">
+                <!-- Go Top Link -->
+                <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="hover:text-amber-500 transition-colors font-bold tracking-widest uppercase text-sm border border-stone-700 px-4 py-2 rounded-full hover:border-amber-500 hover:bg-stone-800">
+                    ↑ Go Top
+                </a>
+            </div>
+            <p class="text-xs text-stone-600">
+                &copy; 2026 Iffy's Life. <br>
+                Based on Notion Data Export.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Image Modal (Zoomable & Draggable) -->
+    <div id="book-list-modal" class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-sm transition-opacity duration-300 opacity-0 overflow-hidden">
+        
+        <!-- Controls Toolbar -->
+        <div class="absolute top-0 left-0 w-full z-[60] flex justify-between items-center p-4 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
+            <span class="text-white/70 text-sm font-sans ml-2 pointer-events-auto bg-black/30 px-3 py-1 rounded-full backdrop-blur-md border border-white/10">
+                🖱️ 滾輪縮放 / 拖曳移動
+            </span>
+            <div class="flex gap-3 pointer-events-auto">
+                <button onclick="adjustZoom(0.2)" class="text-white hover:text-amber-400 p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all backdrop-blur-md border border-white/10 shadow-lg" title="放大">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path></svg>
+                </button>
+                <button onclick="resetZoom()" class="text-white hover:text-amber-400 p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all backdrop-blur-md border border-white/10 shadow-lg" title="重置">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </button>
+                <button onclick="adjustZoom(-0.2)" class="text-white hover:text-amber-400 p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all backdrop-blur-md border border-white/10 shadow-lg" title="縮小">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"></path></svg>
+                </button>
+                <div class="w-px h-8 bg-white/20 mx-2"></div>
+                <button onclick="closeBookListModal()" class="text-white hover:text-rose-500 p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all backdrop-blur-md border border-white/10 shadow-lg" title="關閉">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Image Container -->
+        <div id="modal-img-container" class="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing overflow-hidden select-none">
+            <!-- Ensure 2023閱讀清單.jpg exists -->
+            <img id="modal-image" src="2023閱讀清單.jpg" alt="2023閱讀書單完整圖片" class="max-w-none max-h-[90vh] object-contain transition-transform duration-75 ease-linear origin-center shadow-2xl" draggable="false">
+        </div>
+    </div>
+
+    <!-- Import Navbar Script -->
+    <script src="nav.js"></script>
+
+    <!-- JavaScript Logic -->
+    <script>
+        window.myCharts = [];
+
+        // --- Modal Zoom & Pan Logic (Same as 2025/2024) ---
+        let currentScale = 1;
+        let currentTranslateX = 0;
+        let currentTranslateY = 0;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+
+        function openBookListModal() {
+            const modal = document.getElementById('book-list-modal');
+            modal.classList.remove('hidden');
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            document.body.style.overflow = 'hidden';
+            resetZoom();
+            const container = document.getElementById('modal-img-container');
+            container.addEventListener('wheel', handleWheel, { passive: false });
+            container.addEventListener('mousedown', handleMouseDown);
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('mouseup', handleMouseUp);
+        }
+
+        function closeBookListModal() {
+            const modal = document.getElementById('book-list-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+            const container = document.getElementById('modal-img-container');
+            if(container) {
+                container.removeEventListener('wheel', handleWheel);
+                container.removeEventListener('mousedown', handleMouseDown);
+            }
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        }
+
+        function handleWheel(e) {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            adjustZoom(delta);
+        }
+
+        function adjustZoom(delta) {
+            const newScale = currentScale + delta;
+            if (newScale >= 0.5 && newScale <= 5) {
+                currentScale = newScale;
+                updateImageTransform();
+            }
+        }
+
+        function resetZoom() {
+            currentScale = 1;
+            currentTranslateX = 0;
+            currentTranslateY = 0;
+            updateImageTransform();
+        }
+
+        function handleMouseDown(e) {
+            if (e.button !== 0) return;
+            isDragging = true;
+            startX = e.clientX - currentTranslateX;
+            startY = e.clientY - currentTranslateY;
+            const container = document.getElementById('modal-img-container');
+            container.classList.add('cursor-grabbing');
+            container.classList.remove('cursor-grab');
+        }
+
+        function handleMouseMove(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            currentTranslateX = e.clientX - startX;
+            currentTranslateY = e.clientY - startY;
+            updateImageTransform();
+        }
+
+        function handleMouseUp() {
+            isDragging = false;
+            const container = document.getElementById('modal-img-container');
+            if(container) {
+                container.classList.remove('cursor-grabbing');
+                container.classList.add('cursor-grab');
+            }
+        }
+
+        function updateImageTransform() {
+            const img = document.getElementById('modal-image');
+            if(img) {
+                img.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px) scale(${currentScale})`;
+            }
+        }
+
+        // --- 2023 Data Storage ---
+        const readingData = {
+            // Jan-Dec distribution based on provided data
+            monthlyStats: [0, 2, 10, 9, 5, 3, 1, 2, 0, 0, 0, 1], 
+            genres: {
+                labels: ['懸疑推理', '奇幻/科幻', '療癒/心理勵志', '歷史/傳記', '其他'],
+                data: [14, 9, 7, 3, 1],
+                colors: ['#64748b', '#8b5cf6', '#f97316', '#a8a29e', '#ef4444']
+            },
+            hallOfFame: [
+                {
+                    title: "鏡之孤城",
+                    author: "辻村深月",
+                    category: "favorite",
+                    stars: 6,
+                    desc: "年度唯一 6 星神作。描寫拒絕上學的青少年在鏡中城堡的相遇與救贖，情感細膩深刻，結局令人動容。",
+                    tags: ["奇幻", "療癒", "6星"],
+                    color: "bg-purple-700"
+                },
+                {
+                    title: "沼澤女孩",
+                    author: "迪莉婭·歐文斯 (Delia Owens)",
+                    category: "favorite",
+                    stars: 5,
+                    desc: "孤獨女孩在濕地中的成長與謀殺案的交織。文字優美如詩，對自然的描寫令人屏息。",
+                    tags: ["文學", "自然", "懸疑"],
+                    color: "bg-emerald-600"
+                },
+                {
+                    title: "花開時節",
+                    author: "楊双子",
+                    category: "favorite",
+                    stars: 5,
+                    desc: "穿越到日治時期的台灣，細膩描繪少女間的情誼與當時的社會氛圍。文字優美，展現了獨特的台灣文學魅力。",
+                    tags: ["台灣文學", "歷史", "百合"],
+                    color: "bg-rose-500"
+                },
+                {
+                    title: "內向心理學",
+                    author: "瑪蒂·蘭妮 (Marti Olsen Laney)",
+                    category: "page-turner",
+                    stars: 5,
+                    desc: "為內向者平反的經典之作。幫助深入了解自己的特質，找到在喧囂世界中安身立命的方式。",
+                    tags: ["心理", "自我", "必讀"],
+                    color: "bg-orange-500"
+                },
+                {
+                    title: "重力小丑",
+                    author: "伊坂幸太郎",
+                    category: "page-turner",
+                    stars: 5,
+                    desc: "伊坂幸太郎的代表作之一。以輕盈的筆觸探討沈重的基因與血緣議題，充滿了溫柔的救贖與獨特的幽默感。",
+                    tags: ["懸疑", "推理", "親情"],
+                    color: "bg-indigo-500"
+                },
+                {
+                    title: "正體",
+                    author: "染井為人",
+                    category: "page-turner",
+                    stars: 5,
+                    desc: "3 天完食的精彩懸疑小說。透過不同人的視角拼湊出逃亡死刑犯的真實面貌，結局充滿衝擊力。",
+                    tags: ["懸疑", "長篇", "人性"],
+                    color: "bg-sky-600"
+                },
+                {
+                    title: "約翰伯格投資常識",
+                    author: "約翰·伯格 (John C. Bogle)",
+                    category: "challenge",
+                    stars: 5,
+                    desc: "指數基金之父的經典智慧。戳破投資迷思，強調長期持有與低成本的重要性，是投資理財的必讀聖經。",
+                    tags: ["投資", "理財", "經典"],
+                    color: "bg-teal-600"
+                },
+                {
+                    title: "鴻：三代中國女人的故事",
+                    author: "張戎",
+                    category: "challenge",
+                    stars: 5,
+                    desc: "橫跨百年的家族史詩。透過三代女性的視角，見證中國近代史的動盪與傷痕，極具歷史厚度。",
+                    tags: ["歷史", "傳記", "中國"],
+                    color: "bg-red-800"
+                },
+                {
+                    title: "從清帝國到習近平",
+                    author: "余凱思 (Klaus Mühlhahn)",
+                    category: "challenge",
+                    stars: 5,
+                    desc: "耗時 24 天讀完的硬核歷史書。深入解析中國現代化的歷程，資訊量龐大，極具挑戰性。",
+                    tags: ["歷史", "政治", "硬核"],
+                    color: "bg-stone-700"
+                }
+            ],
+            missedBooks: [
+                {
+                    title: "正常人",
+                    reason: "頻率不對",
+                    comment: "敘事充滿「破碎感」。缺乏場景細節，大量使用代名詞與無引號對話，需費力辨識說話者。章節雖按時間推進，但內部時序跳躍，不太適應這種風格。"
+                },
+                {
+                    title: "瓦力唱片行",
+                    reason: "短篇小品",
+                    comment: "超級短篇的愛情故事。每篇都有種淡淡的哀傷。適合利用零碎的時間讀個幾篇。"
+                },
+                {
+                    title: "孤島的來訪者",
+                    reason: "時機不對",
+                    comment: "純推理的小說，敘述流暢，很容易一直讀。可惜現在心不在此，都在準備北海道行程，只讀了一半就不得不歸還啦！"
+                },
+                {
+                    title: "驗屍報告",
+                    reason: "書名誤導",
+                    comment: "內容圍繞家庭瑣事令人想睡，跳著看才勉強讀完。原文書名 The Mother-in-law 較符實，中文譯名讓人誤解，但也許翻成婆媳關係就沒銷路了吧！"
+                },
+                {
+                    title: "星期五的書店",
+                    reason: "共鳴斷層",
+                    comment: "因未讀過書中討論的『書中書』，難以理解主角的情緒轉折與對話精髓，導致閱讀時常感莫名出戲。雖有貼心書單，但對台灣讀者而言門檻較高，略顯可惜。"
+                }
+            ],
+            fullBookList: [
+                "鏡之孤城", "天國旅行", "現場鑑證", "呼吸", "孤島的來訪者", 
+                "在樹下傳達神諭的貓", "永遠的蕭邦", "門徒", "使者：思念之人", "鯨頭鸛之王",
+                "穿雲少女", "房間裡的大象", "鴻：三代中國女人的故事", "海神", "時空旅人的沙漏",
+                "紅鶴", "晚安，拉赫曼尼諾夫", "沼澤女孩", "邂逅貝多芬", "外科醫生",
+                "再會貝多芬", "再見,德布西", "從清帝國到習近平(下)", "地球盡頭的溫室", "瓦力唱片行",
+                "正常人", "11/22/63", "無人逝去", "如果我們無法以光速前進", "惡魔行為經濟學",
+                "正體", "驗屍報告", "行星語書店", "內向心理學", "花開時節", "重力小丑", "約翰伯格投資常識",
+                "星期五的書店"
+            ]
+        };
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initCounters();
+            initMonthlyChart();
+            initGenreChart();
+            renderBooks('all');
+            renderMissedBooks();
+            renderFullList(); 
+            initFilters();
+            
+            // Mobile menu toggle logic handled by nav.js but backup here just in case
+        });
+
+        // --- Counter Animation ---
+        function initCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.innerText = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // --- Chart.js: Monthly Trend ---
+        function initMonthlyChart() {
+            const ctx = document.getElementById('monthlyChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: '閱讀書籍數量',
+                        data: readingData.monthlyStats,
+                        backgroundColor: (context) => {
+                            const val = context.raw;
+                            return val >= 5 ? '#d97706' : '#e7e5e4';
+                        },
+                        borderRadius: 4,
+                        hoverBackgroundColor: '#b45309'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `📖 ${context.raw} 本書`;
+                                }
+                            },
+                            backgroundColor: '#292524',
+                            titleFont: { family: 'Noto Sans TC' },
+                            bodyFont: { family: 'Noto Sans TC' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#f5f5f4' },
+                            ticks: { font: { family: 'Noto Sans TC' } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { family: 'Noto Sans TC' } }
+                        }
+                    }
+                }
+            });
+            window.myCharts.push(chart);
+        }
+
+        // --- Chart.js: Genre Distribution ---
+        function initGenreChart() {
+            const ctx = document.getElementById('genreChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: readingData.genres.labels,
+                    datasets: [{
+                        data: readingData.genres.data,
+                        backgroundColor: readingData.genres.colors,
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: 20
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                font: { family: 'Noto Sans TC', size: 12 },
+                                boxWidth: 12,
+                                padding: 15,
+                                color: '#44403c'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#292524',
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = context.chart._metasets[context.datasetIndex].total;
+                                    const percentage = Math.round((value / total) * 100) + '%';
+                                    return `${label}: ${value} 本 (${percentage})`;
+                                }
+                            },
+                            titleFont: { family: 'Noto Sans TC' },
+                            bodyFont: { family: 'Noto Sans TC' }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+            window.myCharts.push(chart);
+        }
+
+        // --- Book Cards Rendering ---
+        function renderBooks(filter) {
+            const grid = document.getElementById('book-grid');
+            grid.innerHTML = '';
+            
+            const filteredBooks = filter === 'all' 
+                ? readingData.hallOfFame 
+                : readingData.hallOfFame.filter(book => book.category === filter);
+
+            filteredBooks.forEach((book, index) => {
+                let icon = '📚';
+                if(book.category === 'favorite') icon = '❤️';
+                if(book.category === 'page-turner') icon = '🚀';
+                if(book.category === 'challenge') icon = '🧗';
+
+                const card = document.createElement('div');
+                card.className = `book-card bg-white rounded-xl shadow p-6 border border-stone-100 flex flex-col h-full opacity-0 transform translate-y-4`;
+                card.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1}s`;
+                
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="h-10 w-10 rounded-full ${book.color} text-white flex items-center justify-center text-lg shadow-sm font-sans">
+                            ${icon}
+                        </div>
+                        <div class="flex text-amber-400 text-sm font-sans">
+                            ${'★'.repeat(Math.min(book.stars, 5))}${book.stars > 5 ? '<span class="text-rose-500 animate-pulse">★</span>' : ''}
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-800 mb-1 leading-tight rounded-font">${book.title}</h3>
+                    <p class="text-stone-500 text-sm mb-4 font-sans font-medium text-stone-600">${book.author}</p>
+                    <p class="text-stone-600 text-sm flex-grow mb-4 leading-relaxed font-sans">${book.desc}</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        ${book.tags.map(tag => `<span class="px-2 py-1 bg-stone-100 text-stone-600 text-xs rounded-md font-medium font-sans">#${tag}</span>`).join('')}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            if (!document.getElementById('anim-style')) {
+                const style = document.createElement('style');
+                style.id = 'anim-style';
+                style.innerHTML = `
+                    @keyframes fadeInUp {
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // --- Render Missed Books ---
+        function renderMissedBooks() {
+            const grid = document.getElementById('missed-grid');
+            grid.innerHTML = '';
+            
+            readingData.missedBooks.forEach((book, index) => {
+                const card = document.createElement('div');
+                card.className = 'missed-card border border-stone-200 rounded-lg p-5 bg-white flex flex-col md:flex-row md:items-start gap-4';
+                
+                card.innerHTML = `
+                    <div class="flex-shrink-0 w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center text-stone-400 font-sans text-xl">
+                        📉
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 mb-1">
+                            <h4 class="text-lg font-bold text-stone-600 rounded-font line-through opacity-70 decoration-stone-400">${book.title}</h4>
+                            <span class="px-2 py-0.5 bg-stone-100 text-stone-500 text-xs rounded border border-stone-200 font-sans">${book.reason}</span>
+                        </div>
+                        <p class="text-stone-500 text-sm leading-relaxed font-sans italic">"${book.comment}"</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- Render Full Book List (Background Style) ---
+        function renderFullList() {
+            const container = document.getElementById('book-wall-bg');
+            container.innerHTML = '';
+            
+            const shuffledList = [...readingData.fullBookList].sort(() => 0.5 - Math.random());
+            const displayList = [...shuffledList, ...shuffledList]; // Duplicate for density
+
+            displayList.forEach((title, index) => {
+                const span = document.createElement('span');
+                span.className = 'book-bg-text text-xl md:text-2xl font-bold text-stone-900 whitespace-nowrap';
+                span.style.animationDelay = `${Math.random() * 5}s`;
+                span.style.opacity = 0.5 + Math.random() * 0.5; 
+                span.textContent = title;
+                container.appendChild(span);
+            });
+        }
+
+        // --- Filter Logic ---
+        function initFilters() {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class
+                    buttons.forEach(b => {
+                        b.classList.remove('bg-stone-800', 'text-white');
+                        b.classList.add('bg-stone-200', 'text-stone-600');
+                    });
+                    // Add active class
+                    btn.classList.remove('bg-stone-200', 'text-stone-600');
+                    btn.classList.add('bg-stone-800', 'text-white');
+                    
+                    renderBooks(btn.getAttribute('data-filter'));
+                });
+            });
+        }
+    </script>
+</body>
+</html>
