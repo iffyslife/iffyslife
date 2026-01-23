@@ -1,18 +1,11 @@
-<!-- Chosen Palette: Warm Paper & Ink (Stone, Amber, Slate, Teal) - Extended for Personal Site -->
-<!-- Application Structure Plan:
-    1. Global Navigation: Integrated custom navbar.
-    2. Home View: Personal Hero section (Default Visible).
-    3. Reading Report View: Dark styled header + Content (Default Hidden).
--->
-
+<!-- Chosen Palette: Warm Paper & Ink (Stone, Amber, Slate, Teal) - Homepage -->
 <!DOCTYPE html>
 <html lang="zh-TW" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iffy's Life </title>
+    <title>Iffy's Life</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Fonts: Zen Maru Gothic for Headers, Noto Sans TC for Body text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,25 +18,9 @@
             color: #292524; /* stone-800 */
         }
         
-        h1, h2, h3, h4, .brand-font, .rounded-font, .counter {
+        h1, h2, h3, h4, .brand-font, .rounded-font {
             font-family: 'Zen Maru Gothic', sans-serif;
             font-weight: 700; 
-        }
-        
-        /* Chart Container Styling */
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
         }
 
         /* Custom Scrollbar */
@@ -61,19 +38,7 @@
             background: #78716c; 
         }
 
-        .book-card, .missed-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s;
-        }
-        .book-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .missed-card:hover {
-            background-color: #fafaf9;
-            border-color: #d6d3d1;
-        }
-
-        /* Dropdown Animation */
+        /* Dropdown Animation (CSS needed here for nav.js to use) */
         .group:hover .group-hover\:block {
             display: block;
             animation: fadeIn 0.2s ease-out;
@@ -83,330 +48,46 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Simple Fade In for View Switching */
-        .fade-in-section {
-            animation: fadeInSection 0.5s ease-out;
+        /* Gentle Bounce Animation for Icon */
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(-5%); }
+            50% { transform: translateY(5%); }
         }
-        @keyframes fadeInSection {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .animate-bounce-slow {
+            animation: bounce-slow 3s infinite ease-in-out;
         }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
 
-    <!-- Navigation Bar -->
-    <nav class="sticky top-0 z-50 bg-stone-100/95 backdrop-blur-md border-b border-stone-200 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo / Brand -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="#" onclick="navigateTo('home'); return false;" class="brand-font text-2xl text-stone-800 hover:text-amber-600 transition-colors">
-                        Iffy's Life
-                    </a>
-                </div>
-                
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-6 items-center">
-                    
-                    <!-- 1. 旅行 My Travel Dropdown -->
-                    <div class="relative group h-16 flex items-center">
-                        <button class="text-stone-600 group-hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium transition-colors inline-flex items-center">
-                            旅行 My Travel
-                            <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-                        <!-- Dropdown Content -->
-                        <div class="absolute left-0 top-14 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block border border-stone-100">
-                            <a href="2024.html" class="block px-4 py-2 text-sm text-stone-700 hover:bg-amber-50 hover:text-amber-700">
-                                2024北海道
-                            </a>
-                        </div>
-                    </div>
+    <!-- 1. 這裡是用來放導覽列的容器 (nav.js 會自動填入內容) -->
+    <div id="navbar-placeholder"></div>
 
-                    <!-- 2. 閱讀 My Reading Dropdown -->
-                    <div class="relative group h-16 flex items-center">
-                        <button class="text-stone-600 group-hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium transition-colors inline-flex items-center">
-                            閱讀 My Reading
-                            <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-                        <!-- Dropdown Content -->
-                        <div class="absolute left-0 top-14 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block border border-stone-100">
-                            <a href="#" onclick="navigateTo('reading-2025'); return false;" class="block px-4 py-2 text-sm text-stone-700 hover:bg-amber-50 hover:text-amber-700 font-bold bg-stone-50">
-                                2025閱讀足跡
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="flex md:hidden">
-                    <button type="button" class="text-stone-500 hover:text-stone-800 p-2" id="mobile-menu-btn">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu Panel -->
-        <div class="md:hidden hidden bg-white border-t border-stone-200" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <div class="px-3 py-2 text-xs font-bold text-stone-400 uppercase tracking-wider">旅行 My Travel</div>
-                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50 pl-6">2024北海道</a>
-                
-                <div class="px-3 py-2 text-xs font-bold text-stone-400 uppercase tracking-wider mt-2">閱讀 My Reading</div>
-                <a href="#" onclick="navigateTo('reading-2025'); return false;" class="block px-3 py-2 rounded-md text-base font-medium text-amber-600 bg-amber-50 pl-6">2025閱讀足跡</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- ================= PAGE CONTENT ================= -->
-
-    <!-- PAGE 1: HOME (Restored this section so it's not empty!) -->
-    <div id="page-home" class="flex-grow flex items-center justify-center bg-white fade-in-section">
+    <!-- 2. 這是首頁的原本內文 (Hero Section) -->
+    <main class="flex-grow flex items-center justify-center bg-white">
         <section class="max-w-4xl mx-auto px-4 text-center py-20">
-            <div class="w-32 h-32 bg-stone-200 rounded-full mx-auto mb-8 flex items-center justify-center text-5xl shadow-inner">
+            <div class="w-32 h-32 bg-stone-200 rounded-full mx-auto mb-8 flex items-center justify-center text-5xl shadow-inner animate-bounce-slow">
                 🌿
             </div>
             <h1 class="text-5xl md:text-6xl font-bold text-stone-800 mb-6 tracking-tight">Hello, I'm Iffy.</h1>
             <div class="h-1 w-20 bg-amber-500 mx-auto mb-8 rounded-full"></div>
             <p class="text-xl md:text-2xl text-stone-600 leading-relaxed max-w-2xl mx-auto mb-10 font-light">
-                喜愛閱讀、自我獨處與旅行。<br>
+                喜愛閱讀、自我成長與台灣文學。<br>
                 在文字中尋找共鳴，在生活中實踐所學。<br>
-                歡迎來到我的閱讀與旅行紀錄。
+                歡迎來到我的閱讀與生活紀錄。
             </p>
             <div class="flex justify-center gap-4">
-                <button onclick="navigateTo('reading-2025')" class="bg-stone-800 text-white px-8 py-4 rounded-full hover:bg-stone-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-bold text-lg">
+                <a href="2025Reading.html" class="bg-stone-800 text-white px-8 py-4 rounded-full hover:bg-stone-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-bold text-lg inline-block">
                     探索 2025 閱讀足跡
-                </button>
+                </a>
             </div>
         </section>
-    </div>
-
-    <!-- PAGE 2: READING REPORT (Hidden by default, Dark Style) -->
-    <div id="reading-report" class="bg-stone-50/50 pb-24 flex-grow hidden fade-in-section">
-        
-        <!-- Report Header (Dark Style) -->
-        <div class="bg-stone-800 text-stone-100 py-20 px-4 shadow-lg mb-8">
-            <div class="max-w-6xl mx-auto text-center">
-                <span class="text-amber-500 tracking-widest text-sm font-bold uppercase mb-2 font-sans block">Year in Review</span>
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">2025 年度閱讀足跡</h2>
-                <p class="text-stone-400 max-w-2xl mx-auto text-lg leading-relaxed">
-                    這是充滿奇幻與療癒的一年。從年初的沉潛到年底的爆發，這份互動報告將帶您回顧這 55 本書構築的精神世界。
-                </p>
-            </div>
-        </div>
-
-        <!-- KPI Cards (Overlapping) -->
-        <section class="max-w-6xl mx-auto px-4 mb-16 relative z-10 -mt-20">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-amber-500 text-center">
-                    <div class="text-3xl mb-1">📚</div>
-                    <div class="text-4xl font-bold text-stone-800 counter" data-target="55">0</div>
-                    <div class="text-sm text-stone-500 font-medium mt-1">總接觸書目</div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-teal-500 text-center">
-                    <div class="text-3xl mb-1">✅</div>
-                    <div class="text-4xl font-bold text-stone-800 counter" data-target="44">0</div>
-                    <div class="text-sm text-stone-500 font-medium mt-1">完成閱讀</div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-rose-500 text-center">
-                    <div class="text-3xl mb-1">⭐</div>
-                    <div class="text-4xl font-bold text-stone-800 counter-static">3.5</div>
-                    <div class="text-sm text-stone-500 font-medium mt-1">平均評分 (5星制)</div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border-b-4 border-indigo-500 text-center">
-                    <div class="text-3xl mb-1">⚡</div>
-                    <div class="text-4xl font-bold text-stone-800 counter-static">7.5</div>
-                    <div class="text-sm text-stone-500 font-medium mt-1">平均天數/本</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Main Content Grid -->
-        <main class="max-w-6xl mx-auto px-4 space-y-20">
-
-            <!-- Section 1: Temporal Analysis -->
-            <section id="time-analysis">
-                <div class="mb-10 text-center">
-                    <h3 class="text-3xl font-bold text-stone-800 mb-4 inline-block border-b-4 border-amber-500 pb-2">⏳ 時間軸與閱讀節奏</h3>
-                    <p class="text-stone-600 leading-relaxed max-w-3xl mx-auto mt-2 text-lg">
-                        這一年呈現極為特殊的「先蹲後跳」曲線。前三季因生活重心轉移導致閱讀量較低，但進入第四季後（特別是 12 月），您的閱讀能量驚人爆發，單季貢獻了近 70% 的閱讀量。下方圖表展示了這場閱讀馬拉松的配速。
-                    </p>
-                </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm">
-                        <h4 class="text-lg font-bold text-stone-700 mb-4 flex items-center">
-                            <span class="bg-amber-100 text-amber-800 px-2 py-1 rounded text-xs mr-2 font-sans font-bold">趨勢</span>
-                            月度閱讀量統計
-                        </h4>
-                        <div class="chart-container">
-                            <canvas id="monthlyChart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
-                        <h4 class="text-lg font-bold text-stone-700 mb-4">節奏洞察</h4>
-                        <ul class="space-y-4 text-sm text-stone-600">
-                            <li class="flex items-start">
-                                <span class="text-xl mr-2">🔥</span>
-                                <div>
-                                    <strong class="text-stone-800 block mb-1">讀書會的推坑效應</strong>
-                                    9月加入了 Booktuber Cari 的讀書會，成員間的熱情分享讓閱讀慾望大增，直接引爆了第四季的閱讀狂潮。
-                                </div>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-xl mr-2">🧊</span>
-                                <div>
-                                    <strong class="text-stone-800 block mb-1">重心的暫時轉移</strong>
-                                    前兩季將大部分精力投注於英文學習，導致中文閱讀量暫時下降。這並非倦怠，而是自我提升階段的必要投資。
-                                </div>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-xl mr-2">🏎️</span>
-                                <div>
-                                    <strong class="text-stone-800 block mb-1">極速與長跑</strong>
-                                    有些書 1 天讀完（如《一瞬之光》），而《城與不確定的牆》則陪伴您 38 天。您能自如切換閱讀檔位。
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 2: Genre & Preference -->
-            <section id="genre-analysis" class="bg-white rounded-2xl shadow-lg p-8">
-                <div class="mb-10 text-center max-w-3xl mx-auto">
-                    <h3 class="text-3xl font-bold text-stone-800 mb-4 inline-block border-b-4 border-teal-500 pb-2">🏷️ 閱讀口味與類型分佈</h3>
-                    <p class="text-stone-600 text-lg">
-                        您的閱讀守備範圍相當廣，但核心喜好非常明確。您偏好架構龐大的奇幻世界、充滿歷史記憶的台灣文學，以及尋求內心平靜的心理療癒書籍。有趣的是，評分最高的書往往集中在「台灣文學」與「奇幻」類別。
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="flex flex-col items-center">
-                        <h4 class="text-lg font-bold text-stone-700 mb-2">書籍類型佔比</h4>
-                        <div class="chart-container" style="max-height: 350px;">
-                            <canvas id="genreChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="space-y-6">
-                        <div class="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
-                            <h4 class="font-bold text-purple-900 mb-1">🧙‍♂️ 奇幻/科幻 (Fantasy/Sci-Fi)</h4>
-                            <p class="text-sm text-purple-800">數量最多。您喜愛世界觀完整的系列作，如《香君》、《階梯之城》、《小書痴的下剋上》。這類書籍是您的主力精神食糧。</p>
-                        </div>
-
-                        <div class="p-4 bg-teal-50 rounded-lg border-l-4 border-teal-500">
-                            <h4 class="font-bold text-teal-900 mb-1">🇹🇼 台灣文學/歷史 (Taiwan Lit)</h4>
-                            <p class="text-sm text-teal-800">這是今年的亮點。受到台灣文學作家朱宥勳頻道的啟發，您深入探索了台灣文學的世界，主動挖掘了許多本土作家的精彩作品。</p>
-                        </div>
-
-                        <div class="p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500">
-                            <h4 class="font-bold text-orange-900 mb-1">🧘 療癒/心理勵志 (Healing)</h4>
-                            <p class="text-sm text-orange-800">佔比高，但也伴隨著較高的「棄書率」。這顯示您對這類書籍要求嚴格，偏好有故事性的療癒，而非純理論說教。</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 3: Hall of Fame -->
-            <section id="hall-of-fame">
-                <div class="mb-10 text-center border-b border-stone-200 pb-8">
-                    <div class="mb-6">
-                        <h3 class="text-3xl font-bold text-stone-800 mb-4 inline-block border-b-4 border-stone-800 pb-2">⭐ 2025 年度之最 (Hall of Fame)</h3>
-                        <p class="text-stone-600 max-w-xl mx-auto text-lg mt-2">
-                            根據您的評價與閱讀數據，我們精選了今年的代表作。點擊下方按鈕切換不同獎項。
-                        </p>
-                    </div>
-                    <!-- Filter Buttons -->
-                    <div class="flex justify-center flex-wrap gap-2" id="filter-buttons">
-                        <button class="filter-btn active px-5 py-2 rounded-full text-base font-medium bg-stone-800 text-white transition-colors" data-filter="all">全部展示</button>
-                        <button class="filter-btn px-5 py-2 rounded-full text-base font-medium bg-stone-200 text-stone-600 hover:bg-teal-100 hover:text-teal-800 transition-colors" data-filter="page-turner">🚀 最佳體驗</button>
-                        <button class="filter-btn px-5 py-2 rounded-full text-base font-medium bg-stone-200 text-stone-600 hover:bg-indigo-100 hover:text-indigo-800 transition-colors" data-filter="challenge">🐢 最具挑戰</button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="book-grid">
-                    <!-- Content populated by JS -->
-                </div>
-            </section>
-
-            <!-- Section 3.5: Missed Connections -->
-            <section id="missed-connections" class="border-t border-stone-200 pt-16">
-                <div class="mb-10 text-center">
-                    <h3 class="text-3xl font-bold text-stone-500 mb-4 inline-block border-b-4 border-stone-300 pb-2 flex items-center justify-center">
-                        <span class="mr-3 opacity-50 text-2xl">💔</span> 
-                        頻率未對齊的篇章
-                    </h3>
-                    <p class="text-stone-500 max-w-3xl mx-auto text-lg mt-2">
-                        閱讀是極為主觀的體驗。以下這幾本雖然在市場上或許備受好評，但在今年的旅途中，我們暫時擦身而過。這不代表它們不好，只是此刻的頻率未能共振。
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="missed-grid">
-                    <!-- Content populated by JS -->
-                </div>
-            </section>
-
-            <!-- Section 4: 2026 Recommendations -->
-            <section class="bg-gradient-to-r from-stone-800 to-stone-700 text-stone-100 rounded-2xl p-8 md:p-12 relative overflow-hidden mt-16 text-center shadow-xl">
-                <!-- Decorative circle -->
-                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-stone-600 opacity-20"></div>
-                
-                <h3 class="text-3xl md:text-4xl font-bold mb-10 relative z-10 inline-block border-b-4 border-stone-500 pb-2">📝 給 2026 的閱讀建議</h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10 text-left">
-                    <div class="space-y-6">
-                        <div class="flex">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-amber-500 flex items-center justify-center text-stone-900 font-bold text-lg font-sans">1</div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-bold text-amber-400">擁抱「棄書」的藝術</h4>
-                                <p class="text-stone-300 text-sm mt-1">您 2025 年有 16% 的棄書率，這是非常健康的。2026 請繼續保持「不喜歡就下一本」的態度，保護您的閱讀胃口。</p>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-teal-500 flex items-center justify-center text-stone-900 font-bold text-lg font-sans">2</div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-bold text-teal-400">深耕台灣文學</h4>
-                                <p class="text-stone-300 text-sm mt-1">數據顯示您對台灣故事共鳴極高。2026 年將閱讀陳思宏的作品，並繼續深入朱宥勳與王定國的文學世界，延續這股熱情。</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-6">
-                        <div class="flex">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-rose-500 flex items-center justify-center text-stone-900 font-bold text-lg font-sans">3</div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-bold text-rose-400">語言學習與閱讀的平衡</h4>
-                                <p class="text-stone-300 text-sm mt-1">4-7 月並非閱讀低谷，而是將重心放在增進英文能力。建議 2026 年可嘗試閱讀適合程度的英文原文書，讓語言精進與閱讀樂趣並行。</p>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-500 flex items-center justify-center text-stone-900 font-bold text-lg font-sans">4</div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-bold text-indigo-400">維持「大部頭」與「輕閱讀」的平衡</h4>
-                                <p class="text-stone-300 text-sm mt-1">您擅長讀完厚重小說後穿插輕盈作品，這調節機制非常完美，請繼續維持。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer id="contact" class="bg-stone-900 text-stone-400 py-12 mt-auto">
         <div class="max-w-6xl mx-auto px-4 text-center">
             <h2 class="brand-font text-2xl text-stone-100 mb-6">Iffy's Life</h2>
-            
             <p class="text-xs text-stone-600">
                 &copy; 2026 Iffy's Life. <br>
                 Based on Notion Data Export.
@@ -414,393 +95,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript Logic -->
-    <script>
-        // --- Navigation Logic (Simple Router) ---
-        function navigateTo(pageId) {
-            const homePage = document.getElementById('page-home');
-            const readingPage = document.getElementById('reading-report');
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            if (pageId === 'home') {
-                homePage.classList.remove('hidden');
-                readingPage.classList.add('hidden');
-            } else if (pageId === 'reading-2025') {
-                homePage.classList.add('hidden');
-                readingPage.classList.remove('hidden');
-                // Trigger chart resize in case of display issues on first load
-                if (window.myCharts) {
-                    window.myCharts.forEach(c => c.resize());
-                }
-            }
-        }
-
-        // --- Data Storage (Extracted from Report) ---
-        const readingData = {
-            monthlyStats: [0, 0, 1, 0, 0, 0, 0, 2, 4, 10, 7, 13], 
-            genres: {
-                labels: ['奇幻/科幻', '台灣文學/歷史', '療癒/心理勵志', '懸疑推理', '文學小說', '其他'],
-                data: [15, 12, 12, 6, 5, 5],
-                colors: ['#8b5cf6', '#14b8a6', '#f97316', '#64748b', '#ef4444', '#a8a29e']
-            },
-            hallOfFame: [
-                {
-                    title: "香君",
-                    author: "上橋菜穗子",
-                    category: "page-turner",
-                    stars: 6,
-                    desc: "讓人捨不得讀完的神作！描述擁有超常嗅覺、能聽見植物「聲音」的少女，揭開帝國依賴「歐阿勒稻」背後的秘密。結合植物學與政治角力，久違的滿分故事。",
-                    tags: ["奇幻", "長篇", "6星"],
-                    color: "bg-purple-700"
-                },
-                {
-                    title: "梅雨",
-                    author: "施益堅",
-                    category: "other",
-                    stars: 6,
-                    desc: "近年讀過最深沉之作。以冷靜筆法與「留白」描寫歷史創傷，後勁極強。如梅雨般持續滲入土地與人心，久久無法抽離。",
-                    tags: ["台灣文學", "歷史", "6星"],
-                    color: "bg-teal-700"
-                },
-                {
-                    title: "渺小一生",
-                    author: "柳原翰雅",
-                    category: "challenge",
-                    stars: 6,
-                    desc: "給予 6 星卻難以大聲推薦。從疑惑、憤怒到徹底的悲傷，藉由角色的痛苦釋放了讀者內心深層的情感。打破圓滿結局的慣例，極度虐心卻無比深刻。",
-                    tags: ["文學", "長篇", "虐心"],
-                    color: "bg-stone-800"
-                },
-                {
-                    title: "城與不確定的牆",
-                    author: "村上春樹",
-                    category: "challenge",
-                    stars: 5,
-                    desc: "文字如平緩河流，讓人平靜沉浸。書中「影子」與「夢境」的隱喻呼應榮格心理學。場景鮮明到讓人想畫下來，雖如手抓流水般難以握實全貌，卻是極佳的閱讀體驗。",
-                    tags: ["村上春樹", "長篇", "榮格"],
-                    color: "bg-stone-600"
-                },
-                {
-                    title: "正念旅程",
-                    author: "卡蘿莉恩．諾特貝特",
-                    category: "page-turner",
-                    stars: 6,
-                    desc: "17歲少女與腦科學家母親的愛爾蘭徒步之旅。三天山林對話，將青春期的迷惘比喻為躁動的猴子。從『我是誰』到『如何改變』，以腦科學視角溫柔解答人生難題，是一場安頓身心的深刻旅程。",
-                    tags: ["心理學", "療癒", "6星"],
-                    color: "bg-orange-600"
-                },
-                {
-                    title: "鄰女",
-                    author: "王定國",
-                    category: "other",
-                    stars: 5,
-                    desc: "初讀王定國，氛圍淡然卻透著憂傷。從殺妻出獄男子的視角，穿插回憶層層揭開夫妻羈絆、消失的時光與弒妻背後的真相。敘事自成一格，餘韻無窮。",
-                    tags: ["台灣文學", "中篇", "女性"],
-                    color: "bg-emerald-600"
-                },
-                {
-                    title: "風暴之子",
-                    author: "葛葉",
-                    category: "page-turner",
-                    stars: 5,
-                    desc: "以台灣新石器時代卑南文化為背景，從國寶「人獸形玉玦」發想。描述風暴倖存少年瓦利，在三千年前的遠古世界展開的奇幻長征。",
-                    tags: ["奇幻", "卑南文化", "冒險"],
-                    color: "bg-sky-600"
-                },
-                {
-                    title: "他們沒在寫小說的時候",
-                    author: "朱宥勳",
-                    category: "other",
-                    stars: 5,
-                    desc: "戒嚴時期的文學家群像，歷史與文學的交織，發人深省。",
-                    tags: ["文學", "歷史", "散文"],
-                    color: "bg-amber-700"
-                },
-                {
-                    title: "編舟記",
-                    author: "三浦紫苑",
-                    category: "other",
-                    stars: 5,
-                    desc: "如《強風吹拂》般的慢熱神作。撐過前期的緩慢鋪陳，隨十五年時光流逝，見證眾人為「大渡海」付出的心血與松本老師的遺憾，後勁強到讓人淚流不止。",
-                    tags: ["療癒", "長篇", "職人"],
-                    color: "bg-indigo-500"
-                }
-            ],
-            missedBooks: [
-                {
-                    title: "你就是困住自己的那座山",
-                    reason: "內容空泛",
-                    comment: "覺得描述與理論缺乏說服力，具體作法不足。總結就是「勇敢跨出舒適圈」。"
-                },
-                {
-                    title: "人生圖書館",
-                    reason: "電波不合",
-                    comment: "努力看了一半，但感到沉悶無聊，無法投入劇情。"
-                },
-                {
-                    title: "中年之路",
-                    reason: "閱讀門檻高",
-                    comment: "文字分開看都懂，組在一起卻難以理解，閱讀體驗艱澀。"
-                },
-                {
-                    title: "雲端咕咕國",
-                    reason: "敘事破碎",
-                    comment: "三條主線切得太碎影響節奏，且線索間的連結比預期弱。"
-                },
-                {
-                    title: "我的工作是惡魔",
-                    reason: "角色頻率不對",
-                    comment: "無法喜歡主要角色的個性與說話方式，難以產生代入感。"
-                },
-                {
-                    title: "荒境列車之旅",
-                    reason: "吸引力不足",
-                    comment: "讀了一部份，沒有特別吸引我讀下去的情節。"
-                }
-            ]
-        };
-
-        window.myCharts = [];
-
-        // --- Initialization ---
-        document.addEventListener('DOMContentLoaded', () => {
-            initCounters();
-            initMonthlyChart();
-            initGenreChart();
-            renderBooks('all');
-            renderMissedBooks();
-            initFilters();
-            
-            // Mobile menu toggle logic
-            const mobileBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if(mobileBtn && mobileMenu) {
-                mobileBtn.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
-        });
-
-        // --- Counter Animation ---
-        function initCounters() {
-            const counters = document.querySelectorAll('.counter');
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const duration = 2000; // ms
-                const increment = target / (duration / 16);
-                
-                let current = 0;
-                const updateCounter = () => {
-                    current += increment;
-                    if (current < target) {
-                        counter.innerText = Math.ceil(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.innerText = target;
-                    }
-                };
-                updateCounter();
-            });
-        }
-
-        // --- Chart.js: Monthly Trend ---
-        function initMonthlyChart() {
-            const ctx = document.getElementById('monthlyChart').getContext('2d');
-            const chart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                    datasets: [{
-                        label: '閱讀書籍數量',
-                        data: readingData.monthlyStats,
-                        backgroundColor: (context) => {
-                            const val = context.raw;
-                            // Highlight the peak months
-                            return val >= 7 ? '#d97706' : '#e7e5e4'; // amber-600 vs stone-200
-                        },
-                        borderRadius: 4,
-                        hoverBackgroundColor: '#b45309'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `📖 ${context.raw} 本書`;
-                                }
-                            },
-                            backgroundColor: '#292524',
-                            titleFont: { family: 'Noto Sans TC' },
-                            bodyFont: { family: 'Noto Sans TC' }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: '#f5f5f4' },
-                            ticks: { font: { family: 'Noto Sans TC' } }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { font: { family: 'Noto Sans TC' } }
-                        }
-                    }
-                }
-            });
-            window.myCharts.push(chart);
-        }
-
-        // --- Chart.js: Genre Distribution ---
-        function initGenreChart() {
-            const ctx = document.getElementById('genreChart').getContext('2d');
-            const chart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: readingData.genres.labels,
-                    datasets: [{
-                        data: readingData.genres.data,
-                        backgroundColor: readingData.genres.colors,
-                        borderWidth: 0,
-                        hoverOffset: 10
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: 20
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'right',
-                            labels: {
-                                font: { family: 'Noto Sans TC', size: 12 },
-                                boxWidth: 12,
-                                padding: 15,
-                                color: '#44403c'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: '#292524',
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.raw || 0;
-                                    const total = context.chart._metasets[context.datasetIndex].total;
-                                    const percentage = Math.round((value / total) * 100) + '%';
-                                    return `${label}: ${value} 本 (${percentage})`;
-                                }
-                            },
-                            titleFont: { family: 'Noto Sans TC' },
-                            bodyFont: { family: 'Noto Sans TC' }
-                        }
-                    },
-                    cutout: '60%'
-                }
-            });
-            window.myCharts.push(chart);
-        }
-
-        // --- Book Cards Rendering ---
-        function renderBooks(filter) {
-            const grid = document.getElementById('book-grid');
-            grid.innerHTML = '';
-            
-            const filteredBooks = filter === 'all' 
-                ? readingData.hallOfFame 
-                : readingData.hallOfFame.filter(book => book.category === filter);
-
-            filteredBooks.forEach((book, index) => {
-                // Determine Emoji based on category
-                let icon = '📚';
-                if(book.category === 'page-turner') icon = '🚀';
-                if(book.category === 'challenge') icon = '🧗';
-
-                // Create Card HTML
-                const card = document.createElement('div');
-                card.className = `book-card bg-white rounded-xl shadow p-6 border border-stone-100 flex flex-col h-full opacity-0 transform translate-y-4`;
-                card.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1}s`;
-                
-                card.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="h-10 w-10 rounded-full ${book.color} text-white flex items-center justify-center text-lg shadow-sm font-sans">
-                            ${icon}
-                        </div>
-                        <div class="flex text-amber-400 text-sm font-sans">
-                            ${'★'.repeat(Math.min(book.stars, 5))}${book.stars > 5 ? '<span class="text-rose-500 animate-pulse">★</span>' : ''}
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold text-stone-800 mb-1 leading-tight rounded-font">${book.title}</h3>
-                    <p class="text-stone-500 text-sm mb-4 font-sans font-medium text-stone-600">${book.author}</p>
-                    <p class="text-stone-600 text-sm flex-grow mb-4 leading-relaxed font-sans">${book.desc}</p>
-                    <div class="flex flex-wrap gap-2 mt-auto">
-                        ${book.tags.map(tag => `<span class="px-2 py-1 bg-stone-100 text-stone-600 text-xs rounded-md font-medium font-sans">#${tag}</span>`).join('')}
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-
-            // Add animation keyframes if not exists
-            if (!document.getElementById('anim-style')) {
-                const style = document.createElement('style');
-                style.id = 'anim-style';
-                style.innerHTML = `
-                    @keyframes fadeInUp {
-                        to { opacity: 1; transform: translateY(0); }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-        }
-
-        // --- Render Missed Books ---
-        function renderMissedBooks() {
-            const grid = document.getElementById('missed-grid');
-            grid.innerHTML = '';
-            
-            readingData.missedBooks.forEach((book, index) => {
-                const card = document.createElement('div');
-                card.className = 'missed-card border border-stone-200 rounded-lg p-5 bg-white flex flex-col md:flex-row md:items-start gap-4';
-                
-                card.innerHTML = `
-                    <div class="flex-shrink-0 w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center text-stone-400 font-sans text-xl">
-                        📉
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-3 mb-1">
-                            <h4 class="text-lg font-bold text-stone-600 rounded-font line-through opacity-70 decoration-stone-400">${book.title}</h4>
-                            <span class="px-2 py-0.5 bg-stone-100 text-stone-500 text-xs rounded border border-stone-200 font-sans">${book.reason}</span>
-                        </div>
-                        <p class="text-stone-500 text-sm leading-relaxed font-sans italic">"${book.comment}"</p>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // --- Filter Logic ---
-        function initFilters() {
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    buttons.forEach(b => {
-                        b.classList.remove('bg-stone-800', 'text-white');
-                        b.classList.add('bg-stone-200', 'text-stone-600');
-                    });
-                    btn.classList.remove('bg-stone-200', 'text-stone-600');
-                    btn.classList.add('bg-stone-800', 'text-white');
-                    
-                    renderBooks(btn.getAttribute('data-filter'));
-                });
-            });
-        }
-    </script>
+    <!-- 3. 引入 nav.js 來載入導覽列 -->
+    <script src="nav.js"></script>
 </body>
-
 </html>
